@@ -40,9 +40,10 @@ public class Wget implements Runnable {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        String url = "https://raw.githubusercontent.com/peterarsentev/course_test/master/pom.xml";
-        int speed = 1000;
-        Thread wget = new Thread(new Wget(url, speed));
+        if (args.length == 1 || args.length == 0) {
+            throw new IllegalArgumentException();
+        }
+        Thread wget = new Thread(new Wget(args[0], Integer.parseInt(args[1])));
         wget.start();
         wget.join();
     }
