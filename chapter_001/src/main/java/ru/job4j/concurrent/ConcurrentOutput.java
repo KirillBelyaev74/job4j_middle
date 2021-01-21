@@ -4,8 +4,8 @@ public class ConcurrentOutput {
 
     public static void main(String[] args) {
 
-        Thread first = new Thread(() -> {});
-        Thread second = new Thread(() -> {});
+        Thread first = new Thread();
+        Thread second = new Thread();
 
         System.out.println(first.getName());
         System.out.println(second.getName());

@@ -16,7 +16,7 @@ public class ParseFile {
 
     public synchronized String getContent() {
         StringBuilder stringBuilder = new StringBuilder();
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(this.file))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.file))) {
             String output;
             while ((output = bufferedReader.readLine()) == null) {
                 stringBuilder.append(output);
@@ -33,7 +33,7 @@ public class ParseFile {
             int data;
             while ((data = i.read()) > 0) {
                 if (data < 0x80) {
-                    stringBuilder.append((char)data);
+                    stringBuilder.append((char) data);
                 }
             }
         } catch (IOException ioe) {

@@ -10,11 +10,11 @@ public class ConsoleProgress implements Runnable {
     }
 
     @Override
-    public void run(){
+    public void run() {
         String[] progress = {"|", "/", "_", "\\"};
         int count = 0;
         while (!Thread.currentThread().isInterrupted()) {
-            if(count == 4) {
+            if (count == 4) {
                 count = 0;
             }
             System.out.print("\rLoad: " + progress[count]);
