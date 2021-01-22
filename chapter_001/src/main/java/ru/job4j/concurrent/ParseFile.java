@@ -1,6 +1,7 @@
 package ru.job4j.concurrent;
 
 import java.io.*;
+import java.util.function.Predicate;
 
 public class ParseFile {
 
@@ -14,25 +15,12 @@ public class ParseFile {
         return file;
     }
 
-    public synchronized String getContent() {
-        StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.file))) {
-            String output;
-            while ((output = bufferedReader.readLine()) == null) {
-                stringBuilder.append(output);
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-        return stringBuilder.toString();
-    }
-
-    public synchronized String getContentWithoutUnicode() {
+    public synchronized String getContentWithoutUnicode(Predicate<Integer> predicate) {
         StringBuilder stringBuilder = new StringBuilder();
         try (InputStream i = new FileInputStream(file)) {
             int data;
             while ((data = i.read()) > 0) {
-                if (data < 0x80) {
+                if (predicate.test(data)) {
                     stringBuilder.append((char) data);
                 }
             }
