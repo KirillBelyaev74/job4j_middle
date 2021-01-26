@@ -7,11 +7,7 @@ import java.util.Iterator;
 @ThreadSafe
 public class SingleLockList<T> implements Iterable<T> {
 
-    private final DynamicList<T> dynamicList;
-
-    public SingleLockList() {
-        this.dynamicList = new DynamicList<>();
-    }
+    private final DynamicList<T> dynamicList = new DynamicList<>();
 
     public synchronized void add(T value) {
         this.dynamicList.add(value);
