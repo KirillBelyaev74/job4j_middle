@@ -38,7 +38,7 @@ public class UserStorage {
         User fromUser = this.map.get(fromId);
         User toUser = this.map.get(toId);
         boolean result = false;
-        if (fromUser != null && toUser != null) {
+        if (fromUser != null && toUser != null && fromUser.getAmount() >= amount) {
             this.map.replace(fromId, new User(fromId, fromUser.getAmount() - amount));
             this.map.replace(toId, new User(toId, toUser.getAmount() - amount));
             result = true;
