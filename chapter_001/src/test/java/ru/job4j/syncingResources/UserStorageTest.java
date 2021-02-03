@@ -1,4 +1,4 @@
-package ru.job4j.bank;
+package ru.job4j.syncingResources;
 
 import org.junit.Test;
 import ru.job4j.syncingResources.User;
