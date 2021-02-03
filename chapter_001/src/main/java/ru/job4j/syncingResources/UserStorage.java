@@ -1,11 +1,9 @@
-package ru.job4j.bank;
+package ru.job4j.syncingResources;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @ThreadSafe

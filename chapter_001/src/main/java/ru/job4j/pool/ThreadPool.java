@@ -12,29 +12,31 @@ public class ThreadPool {
 
     public ThreadPool(int size) {
         for (int i = 0; i <= size; i++) {
-            this.threads.add(new Thread(new Task()));
+            this.threads.add(new Task());
             this.threads.get(i).start();
         }
     }
 
     public void work(Runnable job) {
         this.tasks.offer(job);
+        threads.forEach(t -> System.out.println(t.getState()));
     }
 
     public void shutdown() {
         this.threads.forEach(Thread::interrupt);
     }
 
-    private class Task implements Runnable {
+    private class Task extends Thread {
 
         @Override
         public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    tasks.poll().run();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
+                while (!Thread.currentThread().isInterrupted()) {
+                    try {
+                        tasks.poll().run();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+
             }
         }
     }

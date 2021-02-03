@@ -1,6 +1,8 @@
 package ru.job4j.bank;
 
 import org.junit.Test;
+import ru.job4j.syncingResources.SingleLockList;
+
 import java.util.Set;
 import java.util.TreeSet;
 import static org.hamcrest.core.Is.is;
