@@ -13,7 +13,5 @@ public class EmailNotificationTest {
         emailNotification.emailTo(kirill);
         emailNotification.emailTo(nelli);
         emailNotification.close();
-        String result = emailNotification.getLetter();
-        System.out.println(result);
     }
 }
