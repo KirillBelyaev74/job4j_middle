@@ -1,4 +1,4 @@
-package ru.job4j.catchBase;
+package ru.job4j.catchbase;
 
 import java.util.concurrent.ConcurrentHashMap;
 

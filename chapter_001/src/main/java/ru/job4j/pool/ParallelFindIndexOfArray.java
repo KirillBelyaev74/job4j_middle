@@ -62,7 +62,7 @@ public class ParallelFindIndexOfArray<T> extends RecursiveTask<Integer> {
     public static void main(String[] args) {
         int numberThreads = Runtime.getRuntime().availableProcessors();
         ForkJoinPool forkJoinPool = new ForkJoinPool(numberThreads);
-        Integer[] value = {1,2,3,4,5,6,7};
+        Integer[] value = {1, 2, 3, 4, 5, 6, 7};
         ParallelFindIndexOfArray<Integer> parallelFindIndexOfArray =
                 new ParallelFindIndexOfArray<>(value, 0, value.length - 1, 2);
         int result = forkJoinPool.invoke(parallelFindIndexOfArray);

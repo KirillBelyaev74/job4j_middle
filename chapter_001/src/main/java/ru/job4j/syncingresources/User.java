@@ -1,4 +1,4 @@
-package ru.job4j.syncingResources;
+package ru.job4j.syncingresources;
 
 import java.util.Objects;
 

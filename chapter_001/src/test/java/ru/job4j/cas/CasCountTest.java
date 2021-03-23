@@ -5,13 +5,13 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class CASСountTest {
+public class CasCountTest {
 
     @Test
     public void whenTwoThreadThenNumberTwo() {
-        CASСount casСount = new CASСount();
-        Thread threadOne = new Thread(casСount::increment);
-        Thread threadTwo = new Thread(casСount::increment);
+        CasCount casCount = new CasCount();
+        Thread threadOne = new Thread(casCount::increment);
+        Thread threadTwo = new Thread(casCount::increment);
         threadOne.start();
         threadTwo.start();
         try {
@@ -20,6 +20,6 @@ public class CASСountTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertThat(casСount.get(), is(2));
+        assertThat(casCount.get(), is(2));
     }
 }

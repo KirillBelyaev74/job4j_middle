@@ -1,7 +1,6 @@
-package ru.job4j.syncingResources;
+package ru.job4j.syncingresources;
 
 import org.junit.Test;
-import ru.job4j.syncingResources.SingleLockList;
 
 import java.util.Set;
 import java.util.TreeSet;

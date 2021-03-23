@@ -1,8 +1,6 @@
-package ru.job4j.syncingResources;
+package ru.job4j.syncingresources;
 
 import org.junit.Test;
-import ru.job4j.syncingResources.User;
-import ru.job4j.syncingResources.UserStorage;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
