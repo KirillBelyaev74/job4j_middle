@@ -1,4 +1,4 @@
-package ru.job4j.hibernate.mapping;
+package ru.job4j.hibernate.mapping.oneToMany;
 
 import javax.persistence.*;
 import java.util.Objects;

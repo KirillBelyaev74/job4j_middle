@@ -20,8 +20,8 @@
 
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
 
-        <mapping class="ru.job4j.hibernate.mapping.CarBrand"/>
-        <mapping class="ru.job4j.hibernate.mapping.CarModel"/>
+        <mapping class="ru.job4j.hibernate.mapping.oneToMany.CarBrand"/>
+        <mapping class="ru.job4j.hibernate.mapping.oneToMany.CarModel"/>
 
     </session-factory>
 </hibernate-configuration>
