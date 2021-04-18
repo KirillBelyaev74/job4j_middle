@@ -15,6 +15,10 @@ public class CarModel {
     @Column(name = "name")
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "carModelList")
+    private CarBrand carBrand;
+
     public CarModel() {
     }
 

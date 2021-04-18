@@ -22,4 +22,14 @@ public class Dealership {
         }
         return car;
     }
+
+    public CarBrand getById(int id) {
+        CarBrand carBrand;
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            carBrand = session.get(CarBrand.class, id);
+            session.getTransaction().commit();
+        }
+        return carBrand;
+    }
 }
