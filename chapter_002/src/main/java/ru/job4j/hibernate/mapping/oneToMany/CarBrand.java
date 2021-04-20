@@ -17,7 +17,7 @@ public class CarBrand {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private final List<CarModel> carModelList = new ArrayList<>();
 
     public CarBrand() {

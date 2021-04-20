@@ -3,6 +3,7 @@ package ru.job4j.hibernate.mapping.oneToMany;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 public class Dealership {
 
@@ -27,7 +28,8 @@ public class Dealership {
         CarBrand carBrand;
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            carBrand = session.get(CarBrand.class, id);
+            Query query = session.createQuery("select distinct b from CarBrand b join fetch b.carModelList where b.id =: id");
+            carBrand = (CarBrand) query.setParameter("id", id).getSingleResult();
             session.getTransaction().commit();
         }
         return carBrand;
