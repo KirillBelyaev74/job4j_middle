@@ -30,5 +30,7 @@
         <mapping class="ru.job4j.hibernate.mapping.car_owner.Car"/>
         <mapping class="ru.job4j.hibernate.mapping.car_owner.Driver"/>
 
+        <mapping class="ru.job4j.hibernate.hql.Candidate"/>
+
     </session-factory>
 </hibernate-configuration>
