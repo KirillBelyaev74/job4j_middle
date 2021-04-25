@@ -1,88 +1,77 @@
 package ru.job4j.hibernate.hql;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
+import javax.persistence.*;
+import java.util.Objects;
 
-import java.util.List;
-import java.util.function.Function;
-
+@Entity
+@Table(name = "vacancy")
 public class Vacancy {
 
-    private static class InstanceSessionFactory {
-        public static final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "description")
+    private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_database_vacancy")
+    private DatabaseVacancy databaseVacancy;
+
+    public Vacancy() {
     }
 
-    public SessionFactory getInstance() {
-        return InstanceSessionFactory.sessionFactory;
+    public Vacancy(String description) {
+        this.description = description;
     }
 
-    public <T> T save(T t) {
-        try (Session session = getInstance().openSession()) {
-            session.beginTransaction();
-            session.save(t);
-            session.getTransaction().commit();
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public DatabaseVacancy getDatabaseVacancy() {
+        return databaseVacancy;
+    }
+
+    public void setDatabaseVacancy(DatabaseVacancy databaseVacancy) {
+        this.databaseVacancy = databaseVacancy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-        return t;
-    }
-
-    private <T> T action(Function<Session, T> function) {
-        T result;
-        try (Session session = getInstance().openSession()) {
-            session.beginTransaction();
-            result = function.apply(session);
-            session.getTransaction().commit();
+        if (o == null || getClass() != o.getClass()) {
+            return false;
         }
-        return result;
+        Vacancy vacancy = (Vacancy) o;
+        return id == vacancy.id && Objects.equals(description, vacancy.description);
     }
 
-    public List<Candidate> getAll() {
-        return action(session -> {
-            Query<Candidate> query = session.createQuery("from Candidate order by id");
-            return query.getResultList();
-        });
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description);
     }
 
-    public Candidate getById(int id) {
-        return action(session -> {
-                    Query<Candidate> query = session.createQuery("from Candidate where id =: id");
-                    query.setParameter("id", id);
-                    return query.getSingleResult();
-        });
-    }
-
-    public List<Candidate> getByName(String name) {
-        return action(session -> {
-            Query<Candidate> query = session.createQuery("from Candidate where name =: name");
-            query.setParameter("name", name);
-            return query.getResultList();
-        });
-    }
-
-    public boolean update(Candidate candidate) {
-        return action(session -> {
-            int result;
-            Query<Candidate> query = session.createQuery(
-                    "update Candidate set name =: name, experience =: experience, salary =: salary where id =: id");
-            query.setParameter("name", candidate.getName());
-            query.setParameter("experience", candidate.getExperience());
-            query.setParameter("salary", candidate.getSalary());
-            query.setParameter("id", candidate.getId());
-            result = query.executeUpdate();
-            return result != 0;
-        });
-    }
-
-    public boolean delete(int id) {
-        int result;
-        try (Session session = getInstance().openSession()) {
-            session.beginTransaction();
-            Query query = session.createQuery("delete Candidate where id =: id");
-            query.setParameter("id", id);
-            result = query.executeUpdate();
-            session.getTransaction().commit();
-        }
-        return result != 0;
+    @Override
+    public String toString() {
+        return "Vacancy { "
+                + "id = " + id
+                + ", description = '" + description + '\''
+                + '}';
     }
 }

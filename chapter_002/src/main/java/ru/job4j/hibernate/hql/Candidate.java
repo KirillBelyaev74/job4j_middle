@@ -21,6 +21,10 @@ public class Candidate {
     @Column(name = "salary")
     private int salary;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_database_vacancy")
+    private DatabaseVacancy databaseVacancy;
+
     public Candidate() {
     }
 
@@ -60,6 +64,14 @@ public class Candidate {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    public DatabaseVacancy getDatabaseVacancy() {
+        return databaseVacancy;
+    }
+
+    public void setDatabaseVacancy(DatabaseVacancy databaseVacancy) {
+        this.databaseVacancy = databaseVacancy;
     }
 
     @Override
