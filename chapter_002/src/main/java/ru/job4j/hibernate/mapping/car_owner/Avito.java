@@ -9,16 +9,16 @@ import java.util.function.Function;
 
 public class Avito {
 
-    private static SessionFactory sessionFactory;
+    private static class InstanceSessionFactory {
+        private static final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
 
-    public Avito() {
-        if (sessionFactory == null) {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-        }
+    public static SessionFactory getInstance() {
+        return InstanceSessionFactory.sessionFactory;
     }
 
     public <T> T save(T t) {
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = getInstance().openSession()) {
             session.beginTransaction();
             session.save(t);
             session.getTransaction().commit();
@@ -28,7 +28,7 @@ public class Avito {
 
     public <T> T getById(Function<Session, T> function) {
         T result;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = getInstance().openSession()) {
             session.beginTransaction();
             result = function.apply(session);
             session.getTransaction().commit();
