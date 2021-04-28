@@ -1,4 +1,4 @@
-package ru.job4j.hibernate.mapping.car_owner;
+package ru.job4j.hibernate.mapping.car;
 
 import org.junit.Test;
 

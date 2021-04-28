@@ -1,4 +1,4 @@
-package ru.job4j.hibernate.mapping.car_owner;
+package ru.job4j.hibernate.mapping.car;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,11 +10,11 @@ import java.util.function.Function;
 public class Avito {
 
     private static class InstanceSessionFactory {
-        private static final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        private static final SessionFactory SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
     }
 
     public static SessionFactory getInstance() {
-        return InstanceSessionFactory.sessionFactory;
+        return InstanceSessionFactory.SESSION_FACTORY;
     }
 
     public <T> T save(T t) {
@@ -41,10 +41,10 @@ public class Avito {
                 session -> {
                     Car car;
                     Query query = session.createQuery(
-                            "select distinct c from Car c join fetch " +
-                                    "c.driver join fetch " +
-                                    "c.drivers join fetch " +
-                                    "c.engine where c.id =: id");
+                            "select distinct c from Car c join fetch "
+                                    + "c.driver join fetch "
+                                    + "c.drivers join fetch "
+                                    + "c.engine where c.id =: id");
                     query.setParameter("id", id);
                     car = (Car) query.getSingleResult();
                     return car;

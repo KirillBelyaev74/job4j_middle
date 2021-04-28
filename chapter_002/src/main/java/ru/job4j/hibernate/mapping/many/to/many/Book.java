@@ -1,13 +1,12 @@
-package ru.job4j.hibernate.mapping.manyToMany;
+package ru.job4j.hibernate.mapping.many.to.many;
+
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "author")
-public class Author {
+@Table(name = "book")
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,13 +16,10 @@ public class Author {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    private List<Book> books = new ArrayList<>();
-
-    public Author() {
+    public Book() {
     }
 
-    public Author(String name) {
+    public Book(String name) {
         this.name = name;
     }
 
@@ -43,14 +39,6 @@ public class Author {
         this.name = name;
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -59,18 +47,18 @@ public class Author {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Author author = (Author) o;
-        return id == author.id && Objects.equals(name, author.name) && Objects.equals(books, author.books);
+        Book book = (Book) o;
+        return id == book.id && Objects.equals(name, book.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, books);
+        return Objects.hash(id, name);
     }
 
     @Override
     public String toString() {
-        return "Author { "
+        return "Book { "
                 + "id = " + id
                 + ", name = '" + name + '\''
                 + '}';

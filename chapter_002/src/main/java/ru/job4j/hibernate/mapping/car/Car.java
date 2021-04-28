@@ -1,4 +1,4 @@
-package ru.job4j.hibernate.mapping.car_owner;
+package ru.job4j.hibernate.mapping.car;
 
 import javax.persistence.*;
 import java.util.HashSet;

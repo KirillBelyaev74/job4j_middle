@@ -1,9 +1,6 @@
-package ru.job4j.hibernate.mapping.oneToMany;
+package ru.job4j.hibernate.mapping.one.to.many;
 
 import org.junit.Test;
-import ru.job4j.hibernate.mapping.oneToMany.CarBrand;
-import ru.job4j.hibernate.mapping.oneToMany.CarModel;
-import ru.job4j.hibernate.mapping.oneToMany.Dealership;
 
 public class DealershipTest {
 

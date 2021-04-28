@@ -1,4 +1,4 @@
-package ru.job4j.hibernate.mapping.oneToMany;
+package ru.job4j.hibernate.mapping.many.to.many;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "car_brand")
-public class CarBrand {
+@Table(name = "author")
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,13 +17,13 @@ public class CarBrand {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private final List<CarModel> carModelList = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.ALL})
+    private List<Book> books = new ArrayList<>();
 
-    public CarBrand() {
+    public Author() {
     }
 
-    public CarBrand(String name) {
+    public Author(String name) {
         this.name = name;
     }
 
@@ -43,16 +43,12 @@ public class CarBrand {
         this.name = name;
     }
 
-    public List<CarModel> getCarModelList() {
-        return carModelList;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public List<CarModel> setCarModelList() {
-        return carModelList;
-    }
-
-    public void addCarModel(CarModel carModel) {
-        carModelList.add(carModel);
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     @Override
@@ -63,22 +59,20 @@ public class CarBrand {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CarBrand carBrand = (CarBrand) o;
-        return id == carBrand.id && Objects.equals(name, carBrand.name)
-                && Objects.equals(carModelList, carBrand.carModelList);
+        Author author = (Author) o;
+        return id == author.id && Objects.equals(name, author.name) && Objects.equals(books, author.books);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, carModelList);
+        return Objects.hash(id, name, books);
     }
 
     @Override
     public String toString() {
-        return "CarBrand {"
+        return "Author { "
                 + "id = " + id
                 + ", name = '" + name + '\''
-                + ", carModelList = " + carModelList
                 + '}';
     }
 }

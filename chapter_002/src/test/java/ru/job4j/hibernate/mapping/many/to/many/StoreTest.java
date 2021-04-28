@@ -1,4 +1,4 @@
-package ru.job4j.hibernate.mapping.manyToMany;
+package ru.job4j.hibernate.mapping.many.to.many;
 
 import org.junit.Test;
 

@@ -11,11 +11,11 @@ import java.util.function.Function;
 public class Placement {
 
     private static class InstanceSessionFactory {
-        public static final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        public static final SessionFactory SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
     }
 
     public SessionFactory getInstance() {
-        return InstanceSessionFactory.sessionFactory;
+        return InstanceSessionFactory.SESSION_FACTORY;
     }
 
     public <T> T save(T t) {

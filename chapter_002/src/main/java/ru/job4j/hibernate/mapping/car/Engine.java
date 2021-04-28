@@ -1,25 +1,24 @@
-package ru.job4j.hibernate.mapping.manyToMany;
-
+package ru.job4j.hibernate.mapping.car;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "book")
-public class Book {
+@Table(name = "engine")
+public class Engine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    public Book() {
+    public Engine() {
     }
 
-    public Book(String name) {
+    public Engine(String name) {
         this.name = name;
     }
 
@@ -47,8 +46,8 @@ public class Book {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Book book = (Book) o;
-        return id == book.id && Objects.equals(name, book.name);
+        Engine engine = (Engine) o;
+        return id == engine.id && Objects.equals(name, engine.name);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book { "
+        return "Engine { "
                 + "id = " + id
                 + ", name = '" + name + '\''
                 + '}';

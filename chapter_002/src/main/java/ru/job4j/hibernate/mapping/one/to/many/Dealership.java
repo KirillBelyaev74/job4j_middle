@@ -1,4 +1,4 @@
-package ru.job4j.hibernate.mapping.oneToMany;
+package ru.job4j.hibernate.mapping.one.to.many;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
