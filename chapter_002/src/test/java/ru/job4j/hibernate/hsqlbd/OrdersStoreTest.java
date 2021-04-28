@@ -1,6 +1,7 @@
 package ru.job4j.hibernate.hsqlbd;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,10 +15,11 @@ import static org.junit.Assert.*;
 
 public class OrdersStoreTest {
 
-    private BasicDataSource pool = new BasicDataSource();
+    private final BasicDataSource pool = new BasicDataSource();
+    private final OrdersStore ordersStore = new OrdersStore(pool);
 
     @Before
-    public void setUp() throws SQLException {
+    public void start() throws SQLException {
         pool.setDriverClassName("org.hsqldb.jdbcDriver");
         pool.setUrl("jdbc:hsqldb:mem:tests;sql.syntax_pgs=true");
         pool.setUsername("postgres");
@@ -32,11 +34,15 @@ public class OrdersStoreTest {
         pool.getConnection().prepareStatement(new String(file, StandardCharsets.UTF_8)).executeUpdate();
     }
 
+    @After
+    public void finish() {
+        ordersStore.dropTable();
+    }
+
     @Test
     public void whenSaveOrderAndFindAllOneRowWithDescription() {
-        OrdersStore store = new OrdersStore(pool);
-        store.save(Order.of("name1", "description1"));
-        List<Order> all = (List<Order>) store.findAll();
+        ordersStore.save(Order.of("name1", "description1"));
+        List<Order> all = (List<Order>) ordersStore.findAll();
         assertThat(all.size(), is(1));
         assertThat(all.get(0).getDescription(), is("description1"));
         assertThat(all.get(0).getId(), is(1));
@@ -44,7 +50,6 @@ public class OrdersStoreTest {
 
     @Test
     public void whenSaveOrderAndGetTheOrderById() {
-        OrdersStore ordersStore = new OrdersStore(pool);
         Order order = ordersStore.save(Order.of("name", "description"));
         Order result = ordersStore.findById(order.getId());
         assertThat(order, is(result));
@@ -52,7 +57,6 @@ public class OrdersStoreTest {
 
     @Test
     public void whenSaveOrderAndGetTheOrderByName() {
-        OrdersStore ordersStore = new OrdersStore(pool);
         Order order = ordersStore.save(Order.of("name", "description"));
         Order result = ordersStore.findByName("name");
         assertThat(order, is(result));
@@ -60,7 +64,6 @@ public class OrdersStoreTest {
 
     @Test
     public void whenSaveOrderAndUpdateTheOrderThenGetTheOrderById() {
-        OrdersStore ordersStore = new OrdersStore(pool);
         Order order = ordersStore.save(Order.of("name", "description"));
         boolean result = ordersStore.update(order.getId(), Order.of("Kirill", "desc"));
         Order resultOrder = ordersStore.findById(order.getId());

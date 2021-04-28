@@ -2,10 +2,7 @@ package ru.job4j.hibernate.hsqlbd;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -111,6 +108,17 @@ public class OrdersStore {
             result = pr.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return result != 0;
+    }
+
+    public boolean dropTable() {
+        int result = 0;
+        try (Connection connection = pool.getConnection();
+             Statement statement = connection.createStatement()) {
+            result = statement.executeUpdate("drop table orders");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return result != 0;
     }
