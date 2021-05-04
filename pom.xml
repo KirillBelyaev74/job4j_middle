@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.job4j</groupId>
     <artifactId>job4j_middle</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <version>3.0</version>
 
     <modules>
@@ -94,10 +94,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>14</source>
-                    <target>14</target>
-                </configuration>
+                <version>2.3.2</version>
             </plugin>
         </plugins>
     </build>
