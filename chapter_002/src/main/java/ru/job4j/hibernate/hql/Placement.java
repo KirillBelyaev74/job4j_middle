@@ -14,7 +14,7 @@ public class Placement {
         public static final SessionFactory SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
     }
 
-    public SessionFactory getInstance() {
+    private SessionFactory getInstance() {
         return InstanceSessionFactory.SESSION_FACTORY;
     }
 
@@ -27,7 +27,7 @@ public class Placement {
         return t;
     }
 
-    private <T> T action(Function<Session, T> function) {
+    public <T> T action(Function<Session, T> function) {
         T result;
         try (Session session = getInstance().openSession()) {
             session.beginTransaction();

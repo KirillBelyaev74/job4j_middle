@@ -1,5 +1,7 @@
 package ru.job4j.hibernate.hql;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -11,86 +13,82 @@ public class PlacementTest {
 
     private final Placement placement = new Placement();
 
-    @Test
-    public void whenSave() {
-        DatabaseVacancy one = new DatabaseVacancy("HH.Ru");
-        DatabaseVacancy two = new DatabaseVacancy("Zarplata.Ru");
+    private DatabaseVacancy one = new DatabaseVacancy("HH.Ru");
+    private DatabaseVacancy two = new DatabaseVacancy("Zarplata.Ru");
+    private Candidate kirill = new Candidate("Kirill", 0, 100);
+    private Candidate kostya = new Candidate("Kostya", 2, 200);
+    private Vacancy ozon = new Vacancy("OZON");
+    private Vacancy wallberis = new Vacancy("Wallberis");
+
+    @Before
+    public void start() {
         placement.save(one);
         placement.save(two);
-        Candidate candidate1 = new Candidate("Kirill", 0, 100);
-        Candidate candidate2 = new Candidate("Kostya", 2, 200);
-        Candidate candidate3 = new Candidate("Ivan", 5, 500);
-        candidate1.setDatabaseVacancy(one);
-        candidate2.setDatabaseVacancy(one);
-        candidate3.setDatabaseVacancy(two);
-        placement.save(candidate1);
-        placement.save(candidate2);
-        placement.save(candidate3);
-        Vacancy vacancy1 = new Vacancy("OZON");
-        Vacancy vacancy2 = new Vacancy("Wallberis");
-        Vacancy vacancy3 = new Vacancy("Avito");
-        Vacancy vacancy4 = new Vacancy("Auto");
-        vacancy3.setDatabaseVacancy(two);
-        vacancy2.setDatabaseVacancy(one);
-        vacancy1.setDatabaseVacancy(one);
-        vacancy4.setDatabaseVacancy(two);
-        placement.save(vacancy1);
-        placement.save(vacancy2);
-        placement.save(vacancy3);
-        placement.save(vacancy4);
+        kirill.setDatabaseVacancy(one);
+        kostya.setDatabaseVacancy(one);
+        placement.save(kirill);
+        placement.save(kostya);
+        wallberis.setDatabaseVacancy(one);
+        ozon.setDatabaseVacancy(two);
+        placement.save(ozon);
+        placement.save(wallberis);
+    }
+
+    @After
+    public void finish() {
+        placement.action(session -> {
+            session.createQuery("delete from Vacancy").executeUpdate();
+            session.createQuery("delete from Candidate").executeUpdate();
+            session.createQuery("delete from DatabaseVacancy").executeUpdate();
+            return null;
+        });
     }
 
     @Test
     public void whenGetCandidateById() {
-        Candidate candidate = placement.getByIdCandidate(1);
-        assertThat(candidate.getName(), is("Kirill"));
+        Candidate candidate = placement.getByIdCandidate(kirill.getId());
+        assertThat(candidate, is(kirill));
     }
 
     @Test
     public void whenGetCandidateByName() {
         List<Candidate> candidates = placement.getByNameCandidate("Kostya");
-        assertThat(candidates.get(0).getName(), is("Kostya"));
+        assertThat(candidates.get(0), is(kostya));
     }
 
     @Test
     public void whenGetAllCandidate() {
         List<Candidate> candidates = placement.getAllCandidate();
-        assertThat(candidates.get(0).getName(), is("Kirill"));
-        assertThat(candidates.get(1).getName(), is("Kostya"));
-        assertThat(candidates.get(2).getName(), is("Ivan"));
+        assertThat(candidates.size(), is(2));
     }
 
     @Test
     public void whenDeleteCandidateById() {
-        boolean result = placement.deleteCandidate(3);
+        boolean result = placement.deleteCandidate(kirill.getId());
         assertTrue(result);
     }
 
     @Test
     public void whenUpdateCandidateById() {
         Candidate misha = new Candidate("Misha", 7, 700);
-        Candidate dima = new Candidate("Dima", 8, 800);
+        misha.setId(kostya.getId());
 
-        placement.save(misha);
-        dima.setId(misha.getId());
-
-        boolean result = placement.updateCandidate(dima);
-        Candidate candidateResult = placement.getByIdCandidate(dima.getId());
+        boolean result = placement.updateCandidate(misha);
+        Candidate candidateResult = placement.getByIdCandidate(misha.getId());
 
         assertTrue(result);
-        assertThat(candidateResult.getName(), is("Dima"));
+        assertThat(candidateResult, is(misha));
     }
 
     @Test
     public void whenGetDatabaseVacancyById() {
-        DatabaseVacancy result = placement.getByIdDatabaseVacancy(2);
-        System.out.println(result.getCandidate());
-        System.out.println(result.getVacancies());
+        DatabaseVacancy result = placement.getByIdDatabaseVacancy(one.getId());
+        assertThat(result, is(one));
     }
 
     @Test
     public void whenGetVacancyById() {
-        Vacancy result = placement.getByIdVacancy(4);
-        System.out.println(result.getDatabaseVacancy());
+        Vacancy result = placement.getByIdVacancy(ozon.getId());
+        assertThat(result.getDescription(), is(ozon.getDescription()));
     }
 }
