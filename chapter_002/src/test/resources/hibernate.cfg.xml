@@ -19,5 +19,15 @@
         <mapping class="ru.job4j.hibernate.hql.DatabaseVacancy"/>
         <mapping class="ru.job4j.hibernate.hql.Vacancy"/>
 
+        <mapping class="ru.job4j.hibernate.mapping.car.Car"/>
+        <mapping class="ru.job4j.hibernate.mapping.car.Driver"/>
+        <mapping class="ru.job4j.hibernate.mapping.car.Engine"/>
+
+        <mapping class="ru.job4j.hibernate.mapping.many.to.many.Author"/>
+        <mapping class="ru.job4j.hibernate.mapping.many.to.many.Book"/>
+
+        <mapping class="ru.job4j.hibernate.mapping.one.to.many.CarBrand"/>
+        <mapping class="ru.job4j.hibernate.mapping.one.to.many.CarModel"/>
+
     </session-factory>
 </hibernate-configuration>
